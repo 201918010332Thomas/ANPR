@@ -1,74 +1,64 @@
-## What's New
+# **Automatic Number Plate Detection system**
 
-**2022.12.04 车辆和车牌一起检测看这里[车辆系统](https://github.com/we0091234/Car_recognition)**
+github:[https://github.com/201918010332Thomas/ANPR](https://github.com/201918010332Thomas/ANPR)
 
-[yolov7 车牌检测+识别](https://github.com/we0091234/yolov7_plate)
+**Software environment requirements: python >=3.6  pytorch >=1.7**
 
-## **最全车牌识别算法，支持14种中文车牌类型**
-
-**环境要求: python >=3.6  pytorch >=1.7**
-
-#### **图片测试demo:**
+## **GUI program:**
 
 ```
-python detect_plate.py --detect_model weights/plate_detect.pt  --rec_model weights/plate_rec_color.pth --image_path imgs --output result
+python anpr.py
 ```
 
-测试文件夹imgs，结果保存再 result 文件夹中
+## License plate detection training
 
-#### 视频测试demo  [2.MP4](https://pan.baidu.com/s/1O1sT8hCEwJZmVScDwBHgOg)  提取码：41aq
+1. **Dataset**
 
-```
-python detect_plate.py --detect_model weights/plate_detect.pt  --rec_model weights/plate_rec.pth --video 2.mp4
-```
+   This project uses open source datasets CCPD and CRPD.
 
-视频文件为2.mp4  保存为result.mp4
-
-## **车牌检测训练**
-
-1. **下载数据集：**  [datasets](https://pan.baidu.com/s/1xa6zvOGjU02j8_lqHGVf0A) 提取码：pi6c     数据从CCPD和CRPD数据集中选取并转换的
-   数据集格式为yolo格式：
+   The dataset label format is YOLO format：
 
    ```
    label x y w h  pt1x pt1y pt2x pt2y pt3x pt3y pt4x pt4y
    ```
 
-   关键点依次是（左上，右上，右下，左下）
-   坐标都是经过归一化，x,y是中心点除以图片宽高，w,h是框的宽高除以图片宽高，ptx，pty是关键点坐标除以宽高
-2. **修改 data/widerface.yaml    train和val路径,换成你的数据路径**
+   The key points are in order (top left, top right, bottom right, bottom left).
+
+   The coordinates are all normalized, where x and y are the center point divided by the width and height of the image, w and h are the width and height of the box divided by the width and height of the image, ptx and pty are the key point coordinates divided by the width and height.
+2. **Modify the data/widerface.yaml file**
 
    ```
-   train: /your/train/path #修改成你的路径
-   val: /your/val/path     #修改成你的路径
+   train: /your/train/path #This is the training dataset, modify to your path.
+   val: /your/val/path     #This is the evaluation dataset, modify to your path.
    # number of classes
-   nc: 2                 #这里用的是2分类，0 单层车牌 1 双层车牌
+   nc: 2                   #Here we use 2 categories, 0 single layer license plate 1 double layer license plate.
 
    # class names
    names: [ 'single','double']
 
    ```
-3. **训练**
+3. **Train**
 
    ```
-   python3 train.py --data data/widerface.yaml --cfg models/yolov5n-0.5.yaml --weights weights/plate_detect.pt --epoch 250
+   python train.py --data data/widerface.yaml --cfg models/yolov5n-0.5.yaml --weights weights/plate_detect.pt --epoch 250
    ```
 
-   结果存在run文件夹中
-4. **检测模型  onnx export**
-   检测模型导出onnx,需要安装onnx-sim  **[onnx-simplifier](https://github.com/daquexian/onnx-simplifier)**
+   The result exists in the run folder.
+4. **Detection model onnx export**
+   To export the detection model to onnx, onnx sim needs to be installed. **[onnx-simplifier](https://github.com/daquexian/onnx-simplifier)**
 
    ```
    1. python export.py --weights ./weights/plate_detect.pt --img 640 --batch 1
    2. onnxsim weights/plate_detect.onnx weights/plate_detect.onnx
    ```
 
-   **训练好的模型进行检测**
+   **Using trained models for detection**
 
    ```
    python detect_demo.py  --detect_model weights/plate_detect.pt
    ```
 
-## **车牌识别训练**
+## License plate recognition training
 
 车牌识别训练链接如下：
 
@@ -76,36 +66,37 @@ python detect_plate.py --detect_model weights/plate_detect.pt  --rec_model weigh
 
 #### **支持如下：**
 
-- [X] 1.单行蓝牌
-- [X] 2.单行黄牌
-- [X] 3.新能源车牌
-- [X] 4.白色警用车牌
-- [X] 5.教练车牌
-- [X] 6.武警车牌
-- [X] 7.双层黄牌
-- [X] 8.双层武警
-- [X] 9.使馆车牌
-- [X] 10.港澳牌车
-- [X] 11.双层农用车牌
-- [X] 12.民航车牌
-- [X] 13.摩托车牌
-- [X] 14.危险品车牌
+- [X]  1.单行蓝牌
+- [X]  2.单行黄牌
+- [X]  3.新能源车牌
+- [X]  4.白色警用车牌
+- [X]  5.教练车牌
+- [X]  6.武警车牌
+- [X]  7.双层黄牌
+- [X]  8.双层武警
+- [X]  9.使馆车牌
+- [X]  10.港澳牌车
+- [X]  11.双层农用车牌
+- [X]  12.民航车牌
+- [X]  13.摩托车牌
+- [X]  14.危险品车牌
 
-![Image ](image/README/test_1.jpg)
+![Image ](image/README/test_12.jpg)
 
-## 部署
+## Arrange
 
-1. [安卓NCNN](https://github.com/Ayers-github/Chinese-License-Plate-Recognition)
+1.**onnx demo**
 
-2.**onnx demo**，onnx模型见[onnx模型](https://pan.baidu.com/s/1UmWN2kpRP96h2cM6Pi-now)，提取码：ixyr
+The onnx model can be found in [onnx model](https://pan.baidu.com/s/1UmWN2kpRP96h2cM6Pi-now), with extraction code: ixyr
 
-```
 python onnx_infer.py --detect_model weights/plate_detect.onnx  --rec_model weights/plate_rec.onnx  --image_path imgs --output result_onnx
-```
+2.**tensorrt**
 
-3.**tensorrt** 部署见[tensorrt_plate](https://github.com/we0091234/chinese_plate_tensorrt)
+Deployment can be found in [tensorrt_plate](https://github.com/we0091234/chinese_plate_tensorrt)
 
-4.**openvino demo** 版本2022.2
+3.**openvino demo**
+
+Version 2022.2
 
 ```
  python openvino_infer.py --detect_model weights/plate_detect.onnx --rec_model weights/plate_rec.onnx --image_path imgs --output result_openvino
@@ -115,7 +106,3 @@ python onnx_infer.py --detect_model weights/plate_detect.onnx  --rec_model weigh
 
 * [https://github.com/deepcam-cn/yolov5-face](https://github.com/deepcam-cn/yolov5-face)
 * [https://github.com/meijieru/crnn.pytorch](https://github.com/meijieru/crnn.pytorch)
-
-## 联系
-
-**有问题可以提issues 或者加qq群:871797331 询问**
