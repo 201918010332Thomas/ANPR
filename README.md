@@ -75,6 +75,7 @@ The training link for license plate recognition is as follows:
 The onnx model can be found in [onnx model](https://pan.baidu.com/s/1UmWN2kpRP96h2cM6Pi-now), with extraction code: ixyr
 
 python onnx_infer.py --detect_model weights/plate_detect.onnx  --rec_model weights/plate_rec.onnx  --image_path imgs --output result_onnx
+
 2.**tensorrt**
 
 Deployment can be found in [tensorrt_plate](https://github.com/we0091234/chinese_plate_tensorrt)
