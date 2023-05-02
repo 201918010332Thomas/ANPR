@@ -60,28 +60,13 @@ python anpr.py
 
 ## License plate recognition training
 
-车牌识别训练链接如下：
+The training link for license plate recognition is as follows:
 
-[车牌识别训练](https://github.com/we0091234/crnn_plate_recognition)
+[License plate recognition training](https://github.com/201918010332Thomas/CRNN_LPR)
 
-#### **支持如下：**
+#### **The results of license plate recognition are as follows:**
 
-- [X]  1.单行蓝牌
-- [X]  2.单行黄牌
-- [X]  3.新能源车牌
-- [X]  4.白色警用车牌
-- [X]  5.教练车牌
-- [X]  6.武警车牌
-- [X]  7.双层黄牌
-- [X]  8.双层武警
-- [X]  9.使馆车牌
-- [X]  10.港澳牌车
-- [X]  11.双层农用车牌
-- [X]  12.民航车牌
-- [X]  13.摩托车牌
-- [X]  14.危险品车牌
-
-![Image ](image/README/test_12.jpg)
+![Image](image/README/test_12.jpg)
 
 ## Arrange
 
